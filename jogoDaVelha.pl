@@ -12,7 +12,7 @@ posicao(3, 3, 8).
 
 
 iniciar :-
-    nl, write('=== JOGO DA VELHA COM IA AVANCADA (MINIMAX) ==='), nl,
+    nl, write('=== Inicio do jogo! ==='), nl,
     write('Jogador 1: Humano (X) | Jogador 2: Inteligencia Artificial (O)'), nl,
     TabInicial = [0,0,0,0,0,0,0,0,0],
     exibir_tabuleiro(TabInicial),
