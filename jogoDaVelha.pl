@@ -15,22 +15,22 @@ iniciar :-
     nl, write('=== Inicio do jogo! ==='), nl,
     write('Jogador 1: Humano (X) | Jogador 2: Inteligencia Artificial (O)'), nl,
     TabInicial = [0,0,0,0,0,0,0,0,0],
-    exibir_tabuleiro(TabInicial),
+    tabuleiro(TabInicial),
     rodar(TabInicial, 1, _),
     true.
 
 
 
 
-exibir_tabuleiro(Tab) :-
+tabuleiro(Tab) :-
     nl,
-    imprimir_peca(Tab, 0), write(' | '), imprimir_peca(Tab, 1), write(' | '), imprimir_peca(Tab, 2), nl,
+    imprimirPeca(Tab, 0), write(' | '), imprimirPeca(Tab, 1), write(' | '), imprimirPeca(Tab, 2), nl,
     write('---------'), nl,
-    imprimir_peca(Tab, 3), write(' | '), imprimir_peca(Tab, 4), write(' | '), imprimir_peca(Tab, 5), nl,
+    imprimirPeca(Tab, 3), write(' | '), imprimirPeca(Tab, 4), write(' | '), imprimirPeca(Tab, 5), nl,
     write('---------'), nl,
-    imprimir_peca(Tab, 6), write(' | '), imprimir_peca(Tab, 7), write(' | '), imprimir_peca(Tab, 8), nl, nl.
+    imprimirPeca(Tab, 6), write(' | '), imprimirPeca(Tab, 7), write(' | '), imprimirPeca(Tab, 8), nl, nl.
 
-imprimir_peca(Tab, Pos) :-
+imprimirPeca(Tab, Pos) :-
     nth0(Pos, Tab, Valor),
     (Valor == 0 -> write('.') ; 
      Valor == 1 -> write('X') ; 
@@ -93,7 +93,7 @@ minimax(Tab, Profundidade, Jogador, MelhorPontuacao) :-
     (Jogador == 2 -> max_list(Pontuacoes, MelhorPontuacao) ; min_list(Pontuacoes, MelhorPontuacao)).
 
 
-escolher_melhor_movimento(Tab, MelhorPos) :-
+melhorMovimento(Tab, MelhorPos) :-
 
     (posicao(_,_,P), nth0(P, Tab, 0), substituir(Tab, P, 2, NTab), vencedor(NTab, 2) -> MelhorPos = P, ! ;
     
@@ -112,21 +112,21 @@ rodar(Tab, Jogador, _) :-
     Inverso is 3 - Jogador, 
     vencedor(Tab, Inverso), !,
     (Inverso == 1 -> write('Jogador 1 (Voce) venceu o jogo!') ; write('Jogador 2 (IA) venceu o jogo!')), nl,
-    cancelar_execucao.
+    cancelarExecucao.
 
 rodar(Tab, _, _) :-
     empate(Tab), !,
     write('O jogo terminou em empate!'), nl,
-    cancelar_execucao.
+    cancelarExecucao.
 
 
 rodar(Tab, 2, NovoTab) :-
     write('Turno do Jogador 2 (IA)... Pensando...'), nl,
-    escolher_melhor_movimento(Tab, Pos),
+    melhorMovimento(Tab, Pos),
     posicao(Linha, Coluna, Pos),
     jogar(Linha, Coluna, Tab, 2, TabAtualizado),
     write('IA jogou na Linha: '), write(Linha), write(' Coluna: '), write(Coluna), nl,
-    exibir_tabuleiro(TabAtualizado),
+    tabuleiro(TabAtualizado),
     rodar(TabAtualizado, 1, NovoTab).
 
 
@@ -137,11 +137,11 @@ rodar(Tab, 1, NovoTab) :-
     
     (Linha == -1, Coluna == -1 ->
         write('Jogo finalizado pelo usuario.'), nl,
-        cancelar_execucao
+        cancelarExecucao
     ;
         (posicao(Linha, Coluna, _) -> 
             (jogar(Linha, Coluna, Tab, 1, TabAtualizado) ->
-                exibir_tabuleiro(TabAtualizado),
+                tabuleiro(TabAtualizado),
                 rodar(TabAtualizado, 2, NovoTab)
             ;
                 write('Jogada invalida! Essa posicao ja esta ocupada. Tente novamente.'), nl, nl,
@@ -153,5 +153,5 @@ rodar(Tab, 1, NovoTab) :-
         )
     ).
 
-cancelar_execucao :-
+cancelarExecucao :-
     catch(halt, _, true).
