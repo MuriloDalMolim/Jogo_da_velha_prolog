@@ -1,6 +1,6 @@
 # 🎮 Jogo da Velha com IA em Prolog
 
-Projeto acadêmico desenvolvido para a matéria de Paradigmas da programação da UTPFR-DV, curso de Engenharia de Software
+Projeto acadêmico desenvolvido para a disciplina de Paradigmas da programação da UTPFR-DV, curso de Engenharia de Software
 
 ## 📋 Sobre o projeto
 Um jogo da velha clássico (Tic-Tac-Toe) desenvolvido em Prolog, onde o jogador humano enfrenta uma Inteligência Artificial baseada no algoritmo Minimax com cortes lógicos de vitória e bloqueio imediato.
